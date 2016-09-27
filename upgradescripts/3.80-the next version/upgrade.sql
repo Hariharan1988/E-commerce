@@ -95,6 +95,15 @@ set @resources='
   <LocaleResource Name="Plugins.Payments.PayPalDirect.WebhookError">
     <Value>Webhook was not created (see details in the log)</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.ProductReviewPossibleOnlyAfterPurchasing">
+    <Value>Product review possible only after purchasing product</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.ProductReviewPossibleOnlyAfterPurchasing.Hint">
+    <Value>Check if product can be reviewed only by customer who have already ordered it.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Reviews.ProductReviewPossibleOnlyAfterPurchasing">
+    <Value>Product can be reviewed only after purchasing it</Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -170,9 +179,17 @@ DROP TABLE #LocaleStringResourceTmp
 GO
 
 --new setting
- IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'shippingsettings.hideshippingtotal')
- BEGIN
- 	INSERT [Setting] ([Name], [Value], [StoreId])
- 	VALUES (N'shippingsettings.hideshippingtotal', N'False', 0)
- END
- GO
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'shippingsettings.hideshippingtotal')
+BEGIN
+	INSERT [Setting] ([Name], [Value], [StoreId])
+	VALUES (N'shippingsettings.hideshippingtotal', N'False', 0)
+END
+GO
+
+--new setting
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'catalogsettings.productreviewpossibleonlyafterpurchasing')
+BEGIN
+	INSERT [Setting] ([Name], [Value], [StoreId])
+	VALUES (N'catalogsettings.productreviewpossibleonlyafterpurchasing', N'False', 0)
+END
+GO
